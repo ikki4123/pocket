@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pocketview-dev-142829-authRole",
+      "UnauthRoleArn": "arn:aws:iam::763452050408:role/amplify-pocketview-dev-142829-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::763452050408:role/amplify-pocketview-dev-142829-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-pocketview-dev-142829-deployment",
+      "UnauthRoleName": "amplify-pocketview-dev-142829-unauthRole",
+      "StackName": "amplify-pocketview-dev-142829",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:763452050408:stack/amplify-pocketview-dev-142829/6cd5f620-a28e-11ec-9a26-0ec6983c448d",
+      "AmplifyAppId": "d1mw068v2nltcc"
+    }
+  }
+}

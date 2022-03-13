@@ -9,6 +9,8 @@ init:
 deploy:
 	pip freeze > requirements.txt
 	chalice deploy
+local-deploy:
+	chalice local
 
 test:
 	py.test -s tests/test_app.py 

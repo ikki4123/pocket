@@ -4,7 +4,7 @@ import random
 import requests
 import json
 import pprint
-
+import jaconv
 
 cors_config = CORSConfig(
     allow_credentials=True
@@ -24,6 +24,7 @@ def index():
     random_id = getRandomId(request)
     pokemon = json.loads(callPokemonApi(random_id).text)
     return json.dumps({
+        "id": random_id,
         "name": pokemon["name"],
         "stats": {
             "h":pokemon["stats"][0]["base_stat"],
@@ -38,7 +39,26 @@ def index():
             "type2":getType2(pokemon)
         },
         "sprites_back_default": pokemon["sprites"]["back_default"],
+        "sprites_front_default": pokemon["sprites"]["front_default"],
     })
+
+@app.route('/detail', cors=cors_config)
+def findDetail():
+    id = app.current_request.query_params["id"]
+    base_url = "https://pokeapi.co/api/v2/pokemon-species/" + str(id)
+    result = json.loads(requests.get(base_url).text)
+    names = result["names"]
+    name = list(filter(lambda x: x["language"]["name"] == 'ja', names))[0]["name"]
+    flavor_text_entries = result["flavor_text_entries"]
+    flavor_text_entry = list(filter(lambda x: x["language"]["name"] == 'ja-Hrkt', flavor_text_entries))[0]["flavor_text"]
+    flavor_text_entry_ja = list(filter(lambda x: x["language"]["name"] == 'ja', flavor_text_entries))[0]["flavor_text"]
+    return {
+        "name": name,
+        "name_hira": jaconv.kata2hira(name),
+        "flavor_text_entry" : jaconv.kata2hira(''.join(flavor_text_entry)),
+        "flavor_text_entry_ja": ''.join(flavor_text_entry_ja)
+        }
+
 
 def callPokemonApi(id):
     base_url = "https://pokeapi.co/api/v2/pokemon/" + str(id)
