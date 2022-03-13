@@ -1,1 +1,2 @@
-# pocket
+## python version
+3.9.10
