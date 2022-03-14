@@ -70,8 +70,14 @@ def getType2(pokemon):
     return pokemon["types"][1]["type"]["name"]
 
 def getRandomId(request):
-    if request.query_params is None or request.query_params["seed"] is None:
+    if request.query_params is None:
         return random.randint(MIN_ID, MAX_ID)
+        
+    if "seed" in request.query_params:
+        random.seed(request.query_params["seed"])
+        
+    if  "max_id" in request.query_params:
+        print (request.query_params["max_id"])
+        return random.randint(MIN_ID, int(request.query_params["max_id"]))
     
-    random.seed(request.query_params["seed"])
     return random.randint(MIN_ID, MAX_ID)

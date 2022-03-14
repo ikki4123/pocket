@@ -7,6 +7,11 @@ def test_random(client):
     print(response.json)
     assert response.status_code == HTTPStatus.OK
 
+def test_random_max_id(client):
+    response = client.get('/random?max_id=2')
+    print(response.json)
+    assert response.status_code == HTTPStatus.OK
+
 def test_random_with_seed(client):
     response = client.get('/random?seed=1')
     assert response.status_code == HTTPStatus.OK
@@ -23,8 +28,8 @@ def test_find_detail(client):
     response = client.get('/detail?id=1')
     assert response.status_code == HTTPStatus.OK
     assert response.json == {
-        'flavor_text_entry': 'うまれたときからせなかにふしぎなたねがうえてあってからだとともにそだつという。',
-        'flavor_text_entry_ja': '生まれたときから背中に不思議なタネが植えてあって体とともに育つという。',
+        'flavor_text_entry': 'うまれたときから\u3000せなかに\nふしぎな\u3000たねが\u3000うえてあって\nからだと\u3000ともに\u3000そだつという。',
+        'flavor_text_entry_ja': '生まれたときから\u3000背中に\n不思議な\u3000タネが\u3000植えてあって\n体と\u3000ともに\u3000育つという。',
         'name': 'フシギダネ',
         'name_hira': 'ふしぎだね'
         }
