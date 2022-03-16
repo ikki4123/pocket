@@ -31,21 +31,24 @@
           <img :src="state.pokemonData.sprites_back_default"/>
         </div>
         <div v-if="clearCheck() == ''">  ヒント1</div>
-        <p  v-if="state.pokemonData.stats != null">H: {{state.pokemonData["stats"]["h"]}}</p>
-        <p  v-if="state.pokemonData.stats != null">A: {{state.pokemonData["stats"]["a"]}}</p>
-        <p  v-if="state.pokemonData.stats != null">B: {{state.pokemonData["stats"]["b"]}}</p>
-        <p  v-if="state.pokemonData.stats != null">C: {{state.pokemonData["stats"]["c"]}}</p>
-        <p  v-if="state.pokemonData.stats != null">D: {{state.pokemonData["stats"]["d"]}}</p>
-        <p  v-if="state.pokemonData.stats != null">S: {{state.pokemonData["stats"]["s"]}}</p>
+        <label v-if="state.pokemonData.stats != null">H: {{state.pokemonData["stats"]["h"]}}</label><br/>
+        <label v-if="state.pokemonData.stats != null">A: {{state.pokemonData["stats"]["a"]}}</label><br/>
+        <label v-if="state.pokemonData.stats != null">B: {{state.pokemonData["stats"]["b"]}}</label><br/>
+        <label v-if="state.pokemonData.stats != null">C: {{state.pokemonData["stats"]["c"]}}</label><br/>
+        <label v-if="state.pokemonData.stats != null">D: {{state.pokemonData["stats"]["d"]}}</label><br/>
+        <label v-if="state.pokemonData.stats != null">S: {{state.pokemonData["stats"]["s"]}}</label><br/>
+        <label v-if="state.pokemonData.types != null">タイプ1: {{getQuestion(getTypeName(state.pokemonData["types"]["type1"]))}}</label><br>
+        <label v-if="state.pokemonData.types != null">タイプ2: {{getQuestion(getTypeName(state.pokemonData["types"]["type2"]))}}</label>
       </div>
       <div v-if="clearCheck() != ''">  
         <p  v-if="state.pokemonDataDetail.name != null">{{ state.pokemonDataDetail.name }}</p>
         <p  v-if="state.pokemonDataDetail.name != null">{{ state.pokemonDataDetail.flavor_text_entry }}</p>
         <p  v-if="state.pokemonDataDetail.name != null">{{ state.pokemonDataDetail.flavor_text_entry_ja }}</p>
       </div>
+      <br/>
       <div v-if="clearCheck() == ''">  
         <div>ヒント2</div>
-        {{getQuestion()}}
+        {{getQuestion(state.pokemonDataDetail.flavor_text_entry)}}
       </div>
 
       <div>回答欄(ひらがな または 記号(♂♀ー・：))</div>
@@ -125,8 +128,8 @@ export default defineComponent({
       return ''
     }
 
-    function getQuestion() {
-      return state.pokemonDataDetail.flavor_text_entry.split('')
+    function getQuestion(target) {
+      return target.split('')
           .map(l => {
             if (l.match("^[ぁ-んー]*$") == null || l == "。"|| state.answeredLetter.has(l)) {
               return l;
@@ -218,10 +221,54 @@ export default defineComponent({
 
     }
 
+    function getTypeName(type) {
+      switch (type) {
+        case 'none':
+          return '-'
+        case 'grass':
+          return 'くさ'
+        case 'water':
+          return 'みず'
+        case 'dragon':
+          return 'どらごん'
+        case 'fighting':
+          return 'かくとう'
+        case 'bug':
+          return 'むし'
+        case 'poison':
+          return 'どく'
+        case 'normal':
+          return 'のーまる'
+        case 'steel':
+          return 'はがね'
+        case 'fire':
+          return 'ほのお'
+        case 'ground':
+          return 'じめん'
+        case 'ghost':
+          return 'ごーすと'
+        case 'flying':
+          return 'ひこう'
+        case 'dark':
+          return 'あく'
+        case 'fairy':
+          return 'ふぇありー'
+        case 'rock':
+          return 'いわ'
+        case 'psychic':
+          return 'えすぱー'
+        case 'ice':
+          return 'こおり'
+        case 'electric':
+          return 'でんき'
+        default:
+          return type;
+      }
+    }
     onMounted(() => {
       getPokemon(null)
     })
-    return {state, getPokemon, getPlaceHolder, executeAnswer, clearCheck, getQuestion, getAnsweredTaiou, changeDefficulty}
+    return {state, getPokemon, getPlaceHolder, executeAnswer, clearCheck, getQuestion, getAnsweredTaiou, changeDefficulty, getTypeName}
   },
 })
 </script>
