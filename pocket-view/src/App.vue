@@ -102,7 +102,7 @@ export default defineComponent({
     }
 
     function executeAnswer() {
-      const matched = state.input_answer.match("^[ぁ-ん♂♀ー・：]*$");
+      const matched = state.input_answer.match("^[ぁ-ん♂♀ー・：ゔ]*$");
       if (matched == null || state.input_answer.length != state.pokemonDataDetail.name.length) {
         alert(`ひらがなか記号(♂♀ー・：)の${state.pokemonDataDetail.name.length}文字じゃないよ。`)
         return;
@@ -140,7 +140,7 @@ export default defineComponent({
       const taiouList = [
         ["あ", "あ", "ぁ"],
         ["い", "い", "ぃ"],
-        ["う", "う", "ぅ"],
+        ["う", "う", "ぅ", "ゔ"],
         ["え", "え", "ぇ"],
         ["お", "お", "ぉ"],
         ["か", "が"],
@@ -192,6 +192,7 @@ export default defineComponent({
         ["ぁぃぅぇぉ"],
         ["っゃゅょ"],
         ["♂♀ー・："],
+        ["ゔ"],
       ]
       
       return aiueoList.map(arr => arr.map(l => {
